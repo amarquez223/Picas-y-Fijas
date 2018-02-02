@@ -16,8 +16,7 @@ function generar_numero(cifras) {
 
 function valida_entrada() {
 	var arreglo = arr_entrada.slice();
-	console.log(arreglo);
-
+	
 	// Si hay más de 4 dígitos retorna falso
 	if (arreglo.length != 4)
 		return false;
@@ -54,8 +53,12 @@ function calcula_pyf() {
 
 // Genera número aleatorio de 4 dígitos y lo asigna a array respuesta
 var arr_rpta = generar_numero(4);
+console.log(arr_rpta);
 
 var arr_entrada = [];
+
+// Posiciona el cursor en el input
+$("input").focus();
 
 $("input").keyup(function(event) {
 	if (event.keyCode === 13) {
@@ -70,28 +73,39 @@ $("input").keyup(function(event) {
 		if (num<1000) arr_entrada.unshift(0);
 		
 		// Si no es válida la entrada muestra error	
-		if (!valida_entrada()) {
+		if (!valida_entrada() || num.length != 4) {
 			$("span").addClass("error");
+			$("input").addClass("errorinput");
 		}
 		else {
 			// Inicializa arreglo de Picas y Fijas obtenidas
 			var picasyfijas = [];
 
 			$("span").removeClass("error");
-			
+			$("input").removeClass("errorinput");
+
 			picasyfijas = calcula_pyf();
 			nuevo_registro = "<tr><td>" + $("input").val() + "</td>" +
 							"<td>" + picasyfijas[0] + "</td>" +
 							"<td>" + picasyfijas[1] + "</td></tr>";	
 
-			$(".table").append(nuevo_registro);
+			$("tbody").prepend(nuevo_registro);
 			$("input").val("");
 			if (picasyfijas[1] === 4) {
-				alert("GANASTE");
-				location.reload();
+				$(".fin").css("display","inline")
+				$("input").prop("disabled",true);
+				$("#circle").addClass("scale");
+				$(".principal").hide();
 			}
 		}
 	}
-	else
+	else {
 		$("span").removeClass("error");
+		$("input").removeClass("errorinput");
+	}
+});
+
+
+$("#replay").click(function () {
+	location.reload();
 });

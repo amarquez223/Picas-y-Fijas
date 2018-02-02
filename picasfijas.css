@@ -1,3 +1,24 @@
 .error {
 	color: red;
 }
+
+.errorinput {
+	background-color: pink;
+}
+
+.fin {
+	display: none;
+}
+
+#circle {
+	background:#3d6dba;
+	height:200px;
+	width:200px;
+	border-radius: 50%;
+	position:absolute;
+	transition: all 0.5s ease;
+}
+
+#circle.scale {
+	transform:scale(50);
+}
